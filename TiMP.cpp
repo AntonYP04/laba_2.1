@@ -65,16 +65,16 @@ std::wstring Cipher::decrypt(const std::wstring& cipher_text)
 inline int Cipher::getValidKey(std::wstring & ws_key)
 {
 	if (ws_key.empty())
-		throw cipher_error("Пустой ключ");
+		throw cipher_error("Empty key");
 	std::string s_key = codec.to_bytes(ws_key);
 	for (auto & c:ws_key) {
 		if (!iswdigit(c)) {
-			throw cipher_error(std::string("Неправильный тип ключа") + s_key);
+			throw cipher_error(std::string("Invalid key") + s_key);
 		}
 	}
 	int key = std::stoi(ws_key);
 	if (key<=0) {
-		throw cipher_error(std::string("Ключ не допустим. Введите число больше 0"));
+		throw cipher_error(std::string("Invalid key. Enter a number > 0"));
 	}
 	return key;
 }
@@ -90,18 +90,18 @@ inline std::wstring Cipher::getValidOpenText(const std::wstring & ws_open_text)
 		}
 	}
 	if (tmp.empty())
-		throw cipher_error("Входной текст отстутвует");
+		throw cipher_error("Input text is missing");
 	return tmp;
 }
 inline std::wstring Cipher::getValidCipherText(const std::wstring & ws_cipher_text)
 {
 	if (ws_cipher_text.empty())
-		throw cipher_error("Выходной текст отстутвует");
+		throw cipher_error("Output text is missing");
 
 	for (auto c:ws_cipher_text) {
 		if (!iswupper(c)) {
 			if (c!=L'-') {
-				throw cipher_error(std::string("Неправильный тип выходного текста"));
+				throw cipher_error(std::string("Invalid text"));
 			}
 		}
 	}
